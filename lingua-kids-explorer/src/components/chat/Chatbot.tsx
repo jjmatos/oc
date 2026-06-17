@@ -6,6 +6,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useChatStore } from '../../store/useChatStore';
 import { useSessionStore } from '../../store/useSessionStore';
 import { useSettingsStore } from '../../store/useSettingsStore';
+import { Lesson, LessonType } from '../../types';
 import Button from '../ui/Button';
 
 export default function Chatbot() {
@@ -33,13 +34,13 @@ export default function Chatbot() {
       addMessage({ role: 'assistant', content: aiResponse });
       
       if (userMessage.toLowerCase().includes('generate lesson')) {
-        const newLesson = {
+        const newLesson: Lesson = {
           id: Date.now().toString(),
           title: `Custom Lesson (${language.toUpperCase()}): ` + userMessage,
-          topic: 'vocabulary',
+          topic: 'vocabulary' as LessonType,
           difficulty: 'beginner',
           content: { text: aiResponse },
-          languageTarget: language
+          languageTarget: language as 'es' | 'pl'
         };
         setGeneratedLesson(newLesson);
       }
@@ -62,14 +63,21 @@ export default function Chatbot() {
             <ReactMarkdown 
               remarkPlugins={[remarkGfm]}
               components={{
-                code({node, inline, className, children, ...props}) {
+                code({className, children, ...props}) {
                   const match = /language-(\w+)/.exec(className || '')
-                  return !inline && match ? (
-                    <SyntaxHighlighter {...props} style={oneDark} language={match[1]} PreTag="div">
+                  return match ? (
+                    <SyntaxHighlighter
+                      {...props}
+                      style={oneDark}
+                      language={match[1]}
+                      PreTag="div"
+                    >
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
                   ) : (
-                    <code {...props} className={className}>{children}</code>
+                    <code {...props} className={className}>
+                      {children}
+                    </code>
                   )
                 }
               }}

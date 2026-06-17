@@ -1,6 +1,5 @@
 import { useSettingsStore } from '../store/useSettingsStore';
 import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
 
 export default function Settings() {
   const { language, theme, apiKey, model, setLanguage, setTheme, setApiKey, setModel } = useSettingsStore();
