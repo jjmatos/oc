@@ -6,7 +6,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useChatStore } from '../../store/useChatStore';
 import { useSessionStore } from '../../store/useSessionStore';
 import { useSettingsStore } from '../../store/useSettingsStore';
-import { Lesson, LessonType } from "../../types/index";
+import { Lesson, LessonType } from "../../types";
 import Button from '../ui/Button';
 
 export default function Chatbot() {
