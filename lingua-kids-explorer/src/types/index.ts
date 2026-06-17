@@ -5,7 +5,9 @@ export interface Lesson {
   title: string;
   topic: LessonType;
   difficulty: 'beginner' | 'intermediate';
-  content: any; 
+  content: {
+    text: any;
+  };
   languageTarget: 'es' | 'pl';
 }
 
